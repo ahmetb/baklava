@@ -14,7 +14,10 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
+	"baklava/providers/farukgulluoglu"
+	"baklava/providers/imamcagdas"
 	"baklava/providers/karakoygulluoglu"
+	"baklava/providers/kocakbaklava"
 )
 
 type BaklavaProvider interface {
@@ -101,9 +104,9 @@ func run() error {
 
 	for _, v := range []BaklavaProvider{
 		karakoygulluoglu.KarakoyGulluogluProvider{},
-		//farukgulluoglu.FarukGulluoglu{},
-		//kocakbaklava.KocakProvider{},
-		//imamcagdas.ImamCagdasProvider{},
+		farukgulluoglu.FarukGulluoglu{},
+		kocakbaklava.KocakProvider{},
+		imamcagdas.ImamCagdasProvider{},
 	} {
 		cost, err := v.FistikliBaklava()
 		if err != nil {
