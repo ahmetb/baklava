@@ -14,6 +14,10 @@ const (
 
 type KocakProvider struct{}
 
+func (k KocakProvider) Name() string {
+	return "Kocak"
+}
+
 func (k KocakProvider) FistikliBaklava() (*money.Money, error) {
 	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, fistikliBaklavaURL)
 }

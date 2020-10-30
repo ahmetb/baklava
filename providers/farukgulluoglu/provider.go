@@ -20,6 +20,10 @@ const (
 
 type FarukGulluoglu struct{}
 
+func (f FarukGulluoglu) Name() string {
+	return "FarukGulluoglu"
+}
+
 type product struct {
 	Code      string  `json:"code"`             // e.g. M002204
 	Currency  string  `json:"currency"`         // e.g. "TL"

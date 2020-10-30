@@ -14,6 +14,10 @@ const (
 
 type ImamCagdasProvider struct{}
 
+func (i ImamCagdasProvider) Name() string {
+	return "ImamCagdas"
+}
+
 func (i ImamCagdasProvider) FistikliBaklava() (*money.Money, error) {
 	return genericparser.GenericParser{}.FromURL(`div.mainPrices`, fistikliBaklavaURL)
 }
