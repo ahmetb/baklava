@@ -94,11 +94,13 @@ func run() error {
 	y, m, d := time.Now().Date()
 	date := fmt.Sprintf("%d/%d/%d", m, d, y)
 
+	usdtryExchangeRate := rates["TRY"] / rates["USD"]
 	addRow := func(provider BaklavaProvider, costTRY *money.Money, product string) {
 		values.Values = append(values.Values, []interface{}{
 			date, provider.Name(), product,
 			float64(costTRY.Amount()) / 100.0,
-			try2usd(rates, float64(costTRY.Amount())/100.0),
+			float64(costTRY.Amount()) / usdtryExchangeRate,
+			usdtryExchangeRate,
 		})
 	}
 

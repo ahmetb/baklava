@@ -50,7 +50,3 @@ func GetRates() (map[string]float64, error) {
 	}
 	return out, nil
 }
-
-func try2usd(rates map[string]float64, in float64) float64 {
-	return rates["USD"] / rates["TRY"] * in
-}
