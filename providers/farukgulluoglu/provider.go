@@ -15,21 +15,29 @@ import (
 )
 
 const (
-	farukGulluogluPriceList              = "https://www.farukgulluoglu.com.tr/baklavalar?stock=1"
+	farukGulluogluPriceList = "https://www.farukgulluoglu.com.tr/baklavalar?stock=1"
 )
 
 type FarukGulluoglu struct{}
 
 type product struct {
-	Code      string `json:"code"`             // e.g. M002204
-	Currency  string `json:"currency"`         // e.g. "TL"
+	Code      string  `json:"code"`             // e.g. M002204
+	Currency  string  `json:"currency"`         // e.g. "TL"
 	BasePrice float64 `json:"total_base_price"` // e.g. 109
-	URL       string `json:"url"`              // e.g. "cevizli-baklava"
-	Name      string `json:"name"`             // e.g. "Cevizli Baklava"
+	URL       string  `json:"url"`              // e.g. "cevizli-baklava"
+	Name      string  `json:"name"`             // e.g. "Cevizli Baklava"
 }
 
-func (f FarukGulluoglu) UnitPrice() (*money.Money, error) {
+func (f FarukGulluoglu) FistikliBaklava() (*money.Money, error) {
 	return f.findItem("Fıstıklı Baklava")
+}
+
+func (f FarukGulluoglu) KuruBaklava() (*money.Money, error) {
+	return f.findItem("Fıstıklı Kuru Baklava")
+}
+
+func (f FarukGulluoglu) FistikDolama() (*money.Money, error) {
+	return f.findItem("Fıstıklı Dürüm")
 }
 
 func (f FarukGulluoglu) findItem(name string) (*money.Money, error) {
@@ -67,9 +75,8 @@ func (f FarukGulluoglu) findItem(name string) (*money.Money, error) {
 			if c == "TL" {
 				c = "TRY" // correct it
 			}
-			return money.New(int64(p.BasePrice * 100), c),nil // *100 captures the decimal point
+			return money.New(int64(p.BasePrice*100), c), nil // *100 captures the decimal point
 		}
 	}
 	return nil, fmt.Errorf("product not found")
 }
-

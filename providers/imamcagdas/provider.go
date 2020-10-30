@@ -6,10 +6,22 @@ import (
 	"baklava/providers/genericparser"
 )
 
-const url = `https://www.imamcagdas.com/normal-baklava-27`
+const (
+	fistikliBaklavaURL = `https://www.imamcagdas.com/normal-baklava-27`
+	kuruBaklavaURL     = `https://www.imamcagdas.com/fistikli-kuru-baklava`
+	fistikDolamaURL    = "https://www.imamcagdas.com/fistik-dolama-1"
+)
 
-type ImamCagdasFistikliBaklavaProvider struct{}
+type ImamCagdasProvider struct{}
 
-func (i ImamCagdasFistikliBaklavaProvider) UnitPrice() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`div.mainPrices`, url)
+func (i ImamCagdasProvider) FistikliBaklava() (*money.Money, error) {
+	return genericparser.GenericParser{}.FromURL(`div.mainPrices`, fistikliBaklavaURL)
+}
+
+func (i ImamCagdasProvider) FistikDolama() (*money.Money, error) {
+	return genericparser.GenericParser{}.FromURL(`div.mainPrices`, fistikDolamaURL)
+}
+
+func (i ImamCagdasProvider) KuruBaklava() (*money.Money, error) {
+	return genericparser.GenericParser{}.FromURL(`div.mainPrices`, kuruBaklavaURL)
 }

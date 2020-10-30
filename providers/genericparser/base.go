@@ -32,8 +32,9 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		return nil, fmt.Errorf("selector didn't match anything")
 	}
 	t = strings.TrimFunc(t, unicode.IsSpace)
+	t = strings.ReplaceAll(t, "\n", "")
 	t = strings.TrimSuffix(t, " TL")
-	re := regexp.MustCompile(`^(\d+)[,\.](\d+)$`)
+	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.](\d+)$`)
 	if !re.MatchString(t) {
 		return nil, fmt.Errorf("string doesn't match format for parsing: %s (%s)", t, re)
 	}

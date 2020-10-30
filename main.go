@@ -11,22 +11,33 @@ import (
 	"baklava/providers/kocakbaklava"
 )
 
-type FistikliBaklavaProvider interface {
-	UnitPrice() (*money.Money, error)
+type BaklavaProvider interface {
+	FistikliBaklava() (*money.Money, error)
+	KuruBaklava() (*money.Money, error)
+	FistikDolama() (*money.Money, error)
 }
 
 func main() {
-
-	for _, v := range []FistikliBaklavaProvider{
-		kocakbaklava.KocakFistikliBaklavaProvider{},
-		imamcagdas.ImamCagdasFistikliBaklavaProvider{},
-		karakoygulluoglu.KarakoyGulluogluFistikliBaklavaProvider{},
+	for _, v := range []BaklavaProvider{
+		karakoygulluoglu.KarakoyGulluogluProvider{},
 		farukgulluoglu.FarukGulluoglu{},
-	}{
-		cost, err := v.UnitPrice()
+		kocakbaklava.KocakProvider{},
+		imamcagdas.ImamCagdasProvider{},
+	} {
+		cost, err := v.FistikliBaklava()
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("%T: %s\n", v, cost.Display())
+		fmt.Printf("%T fistikli baklava: %s\n", v, cost.Display())
+		cost, err = v.KuruBaklava()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%T kuru baklava: %s\n", v, cost.Display())
+		cost, err = v.FistikDolama()
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%T fistik dolama: %s\n", v, cost.Display())
 	}
 }
