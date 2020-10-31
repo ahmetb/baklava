@@ -99,9 +99,9 @@ func run() error {
 	addRow := func(provider BaklavaProvider, costTRY *money.Money, product string) {
 		values.Values = append(values.Values, []interface{}{
 			date, provider.Name(), product,
-			float64(costTRY.Amount()) / 100.0,
-			float64(costTRY.Amount()) / 100.0 / exchangeRate,
-			exchangeRate,
+			fmt.Sprintf("%.2f", float64(costTRY.Amount())/100.0),
+			fmt.Sprintf("%.2f", float64(costTRY.Amount())/100.0/exchangeRate),
+			fmt.Sprintf("%.2f", exchangeRate),
 		})
 	}
 
@@ -115,13 +115,14 @@ func run() error {
 		if err != nil {
 			return fmt.Errorf("failed to get price (%T): %w", v, err)
 		}
-		fmt.Printf("%T fistikli baklava: %s\n", v, cost.Display())
+		log.Printf("%T fistikli baklava: %s\n", v, cost.Display())
 		addRow(v, cost, "fistikli_baklava")
 
 		cost, err = v.KuruBaklava()
 		if err != nil {
 			return fmt.Errorf("failed to get price (%T): %w", v, err)
 		}
+		log.Printf("%T kuru_baklava: %s", v, cost.Display())
 		addRow(v, cost, "kuru_baklava")
 
 		cost, err = v.FistikDolama()
