@@ -45,11 +45,18 @@ func init() {
 func main() {
 	flag.Parse()
 	if flCLI {
+		log.Println("running one-off as cli tool")
 		if err := run(); err != nil {
 			fmt.Printf("error: %v\n", err)
 			os.Exit(1)
 		}
 		return
+	}
+	if v := os.Getenv("SHEET_ID"); v != "" {
+		flSheetID = v
+	}
+	if !flNoUpdate && flSheetID == "" {
+		log.Fatal("SHEET_ID is empty")
 	}
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -64,16 +71,11 @@ func main() {
 		}
 		fmt.Fprintf(rw, "ok")
 	})
+	log.Printf("server starting at :%s", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func run() error {
-	if v := os.Getenv("SHEET_ID"); v != "" {
-		flSheetID = v
-	}
-	if !flNoUpdate && flSheetID == "" {
-		log.Fatal("SHEET_ID is empty")
-	}
 	rates, err := GetRates()
 	if err != nil {
 		return fmt.Errorf("%w", err)
