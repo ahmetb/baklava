@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -66,7 +67,7 @@ func main() {
 	http.HandleFunc("/run", func(rw http.ResponseWriter, _ *http.Request) {
 		if err := run(); err != nil {
 			rw.WriteHeader(http.StatusInternalServerError)
-			fmt.Fprintf(rw, "error: %v\n", err)
+			fmt.Fprintf(io.MultiWriter(os.Stderr, rw), "error: %v\n", err)
 			return
 		}
 		fmt.Fprintf(rw, "ok")
