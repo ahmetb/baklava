@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/xml"
 	"net/http"
+
+	"github.com/Rhymond/go-money"
 )
 
 type envelope struct {
@@ -49,4 +51,20 @@ func GetRates() (map[string]float64, error) {
 		out[v.Currency] = v.Rate
 	}
 	return out, nil
+}
+
+func toTRY(c *money.Money, rates map[string]float64) *money.Money {
+	if c.Currency().Code == "TRY" {
+		return c
+	}
+	// TODO add handling for not supported currencies
+	return money.New(int64(float64(c.Amount())*(rates["TRY"]/rates[c.Currency().Code])), "TRY")
+}
+
+func toUSD(c *money.Money, rates map[string]float64) *money.Money {
+	if c.Currency().Code == "USD" {
+		return c
+	}
+	// TODO add handling for not supported currencies
+	return money.New(int64(float64(c.Amount())/(rates[c.Currency().Code]/rates["USD"])), "USD")
 }

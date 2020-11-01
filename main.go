@@ -99,13 +99,17 @@ func run() error {
 
 	exchangeRate := rates["TRY"] / rates["USD"]
 	log.Printf("USDTRY exchange rate is: %.2f", exchangeRate)
-	addRow := func(provider BaklavaProvider, costTRY *money.Money, product string) {
-		values.Values = append(values.Values, []interface{}{
+	addRow := func(provider BaklavaProvider, cost *money.Money, product string) {
+		costTRY := toTRY(cost, rates)
+		costUSD := toUSD(cost, rates)
+		v := []interface{}{
 			date, provider.Name(), product,
 			fmt.Sprintf("%.2f", float64(costTRY.Amount())/100.0),
-			fmt.Sprintf("%.2f", float64(costTRY.Amount())/100.0/exchangeRate),
+			fmt.Sprintf("%.2f", float64(costUSD.Amount())/100.0),
 			fmt.Sprintf("%.2f", exchangeRate),
-		})
+		}
+		values.Values = append(values.Values, v)
+		log.Printf("%#v", v)
 	}
 
 	for _, v := range []BaklavaProvider{

@@ -33,8 +33,17 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	}
 	t = strings.TrimFunc(t, unicode.IsSpace)
 	t = strings.ReplaceAll(t, "\n", "")
-	t = strings.TrimSuffix(t, " TL")
-	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.](\d+)$`)
+
+	currency := "TRY" // assume default
+	if strings.HasSuffix(t, "TL") {
+		currency = "TRY"
+		t = strings.TrimSuffix(t, "TL")
+	} else if strings.HasSuffix(t, "USD") {
+		currency = "USD"
+		t = strings.TrimSuffix(t, "USD")
+	}
+
+	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.](\d+)\s*$`)
 	if !re.MatchString(t) {
 		return nil, fmt.Errorf("string doesn't match format for parsing: %s (%s)", t, re)
 	}
@@ -42,6 +51,5 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	dec, frac := groups[1], groups[2]
 	iDec, _ := strconv.ParseInt(dec, 10, 64)
 	iFrac, _ := strconv.ParseInt(frac, 10, 64)
-	currency := "TRY"
 	return money.New(iDec*100+iFrac, currency), nil
 }

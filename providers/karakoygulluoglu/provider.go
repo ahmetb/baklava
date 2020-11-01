@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	fistikliBaklavaURL = "https://www.karakoygulluoglu.com/baklava-with-pistachio-en"
+	fistikliBaklavaURL = "https://www.karakoygulluoglu.com/fistikli-baklava"
 	kuruBaklavaURL     = "https://www.karakoygulluoglu.com/fistikli-kuru-baklava"
 	fistikDolamaURL    = "https://www.karakoygulluoglu.com/fistikli-durum"
 )
