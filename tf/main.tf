@@ -25,7 +25,7 @@ resource "google_cloud_scheduler_job" "job" {
   http_target {
     http_method = "GET"
     # TODO pull the url from the "data"
-    uri = "https://${element(data.google_cloud_run_service.default.status, 0).url}/run"
+    uri = "${element(data.google_cloud_run_service.default.status, 0).url}/run"
 
     oidc_token {
       service_account_email = google_service_account.default.email
