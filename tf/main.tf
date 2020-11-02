@@ -2,13 +2,17 @@ provider google {
   project = "ahmet-personal-api"
 }
 
-resource "google_service_account" "default" {
-  account_id = "baklava"
-}
 
 data "google_cloud_run_service" "default" {
+  # managed by Google Cloud Build + Cloud Run integration; not TF
+  # although there's a bit of cyclic dependency since it uses the
+  # service account provisioned below.
   name     = "baklava"
   location = "us-central1"
+}
+
+resource "google_service_account" "default" {
+  account_id = "baklava"
 }
 
 resource "google_cloud_scheduler_job" "job" {
@@ -16,7 +20,7 @@ resource "google_cloud_scheduler_job" "job" {
   description = "updates baklava prices"
   schedule    = "15 2 * * *"
   time_zone   = "America/Los_Angeles"
-  region      = "us-east1" # because that's where GAE zone is
+  region      = "us-east1" # because that's where GAE zone (hence scheduler) is :(
 
   attempt_deadline = "120s"
   retry_config {
@@ -24,7 +28,6 @@ resource "google_cloud_scheduler_job" "job" {
   }
   http_target {
     http_method = "GET"
-    # TODO pull the url from the "data"
     uri = "${element(data.google_cloud_run_service.default.status, 0).url}/run"
 
     oidc_token {
