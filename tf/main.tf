@@ -18,7 +18,7 @@ resource "google_service_account" "default" {
 resource "google_cloud_scheduler_job" "job" {
   name        = "baklava"
   description = "updates baklava prices"
-  schedule    = "6 8 * * *" # every morning
+  schedule    = "5 18 * * *" # every evening
   time_zone   = "Europe/Istanbul"
   region      = "us-east1" # because that's where GAE zone (hence scheduler) is :(
 
@@ -31,6 +31,7 @@ resource "google_cloud_scheduler_job" "job" {
     uri = "${element(data.google_cloud_run_service.default.status, 0).url}/run"
 
     oidc_token {
+      audience = "${element(data.google_cloud_run_service.default.status, 0).url}/run"
       service_account_email = google_service_account.default.email
     }
   }
