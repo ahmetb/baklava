@@ -19,6 +19,7 @@ import (
 	"baklava/providers/imamcagdas"
 	"baklava/providers/karakoygulluoglu"
 	"baklava/providers/kocakbaklava"
+	"baklava/util"
 )
 
 type BaklavaProvider interface {
@@ -112,6 +113,7 @@ func run() error {
 		log.Printf("%#v", v)
 	}
 
+	var errs util.ErrGroup
 	for _, v := range []BaklavaProvider{
 		karakoygulluoglu.KarakoyGulluogluProvider{},
 		farukgulluoglu.FarukGulluoglu{},
@@ -120,24 +122,27 @@ func run() error {
 	} {
 		cost, err := v.FistikliBaklava()
 		if err != nil {
-			return fmt.Errorf("failed to get price (%T): %w", v, err)
+			errs = append(errs, fmt.Errorf("failed to get price (%T): %w", v, err))
+		} else {
+			log.Printf("%T fistikli baklava: %s\n", v, cost.Display())
+			addRow(v, cost, "fistikli_baklava")
 		}
-		log.Printf("%T fistikli baklava: %s\n", v, cost.Display())
-		addRow(v, cost, "fistikli_baklava")
 
 		cost, err = v.KuruBaklava()
 		if err != nil {
-			return fmt.Errorf("failed to get price (%T): %w", v, err)
+			errs = append(errs, fmt.Errorf("failed to get price (%T): %w", v, err))
+		} else {
+			log.Printf("%T kuru_baklava: %s", v, cost.Display())
+			addRow(v, cost, "kuru_baklava")
 		}
-		log.Printf("%T kuru_baklava: %s", v, cost.Display())
-		addRow(v, cost, "kuru_baklava")
 
 		cost, err = v.FistikDolama()
 		if err != nil {
-			return fmt.Errorf("failed to get price (%T): %w", v, err)
+			errs = append(errs, fmt.Errorf("failed to get price (%T): %w", v, err))
+		} else {
+			log.Printf("%T fistik dolama: %s", v, cost.Display())
+			addRow(v, cost, "fistik_dolama")
 		}
-		log.Printf("%T fistik dolama: %s", v, cost.Display())
-		addRow(v, cost, "fistik_dolama")
 	}
 
 	if !flNoUpdate {
@@ -145,6 +150,9 @@ func run() error {
 			ValueInputOption("USER_ENTERED").Do(); err != nil {
 			return fmt.Errorf("%w", err)
 		}
+	}
+	if len(errs) > 0 {
+		return errs
 	}
 	return nil
 }
