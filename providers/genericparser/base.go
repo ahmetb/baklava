@@ -49,7 +49,7 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		t = strings.TrimSuffix(t, "USD")
 	}
 
-	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.](\d+)\s*$`)
+	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.]?(\d+)?\s*$`)
 	if !re.MatchString(t) {
 		return nil, fmt.Errorf("string doesn't match format for parsing: %s (%s)", t, re)
 	}
