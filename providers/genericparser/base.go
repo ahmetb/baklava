@@ -55,7 +55,13 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	}
 	groups := re.FindStringSubmatch(t)
 	dec, frac := groups[1], groups[2]
-	iDec, _ := strconv.ParseInt(dec, 10, 64)
-	iFrac, _ := strconv.ParseInt(frac, 10, 64)
+	iDec, err := strconv.ParseInt(dec, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing decimal value (from %v): %v", dec, err)
+	}
+	iFrac, err := strconv.ParseInt(frac, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing fractional value (from %v): %v", frac, err)
+	}
 	return money.New(iDec*100+iFrac, currency), nil
 }
