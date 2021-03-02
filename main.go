@@ -16,6 +16,9 @@ import (
 	"google.golang.org/api/sheets/v4"
 
 	"baklava/providers/farukgulluoglu"
+	"baklava/providers/imamcagdas"
+	"baklava/providers/karakoygulluoglu"
+	"baklava/providers/kocakbaklava"
 	"baklava/util"
 )
 
@@ -112,10 +115,10 @@ func run() error {
 
 	var errs util.ErrGroup
 	for _, v := range []BaklavaProvider{
-		// karakoygulluoglu.KarakoyGulluogluProvider{},
+		karakoygulluoglu.KarakoyGulluogluProvider{},
 		farukgulluoglu.FarukGulluogluProvider{},
-		// kocakbaklava.KocakProvider{},
-		// imamcagdas.ImamCagdasProvider{},
+		kocakbaklava.KocakProvider{},
+		imamcagdas.ImamCagdasProvider{},
 	} {
 		cost, err := v.FistikliBaklava()
 		if err != nil {
