@@ -55,6 +55,9 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	}
 	groups := re.FindStringSubmatch(t)
 	dec, frac := groups[1], groups[2]
+	if frac == "" {
+		frac = "0"
+	}
 	iDec, err := strconv.ParseInt(dec, 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing decimal value (from %v): %v", dec, err)
