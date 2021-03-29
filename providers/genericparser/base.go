@@ -51,7 +51,7 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 
 	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.]?(\d+)?\s*$`)
 	if !re.MatchString(t) {
-		return nil, fmt.Errorf("string doesn't match format for parsing: %s (%s)", t, re)
+		return nil, fmt.Errorf("string doesn't match format for parsing: %q (%s)", t, re)
 	}
 	groups := re.FindStringSubmatch(t)
 	dec, frac := groups[1], groups[2]
