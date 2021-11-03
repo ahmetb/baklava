@@ -15,6 +15,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
+	"baklava/providers/elmacipazarigulluoglu"
 	"baklava/providers/farukgulluoglu"
 	"baklava/providers/gaziantepgulluoglu"
 	"baklava/providers/imamcagdas"
@@ -118,6 +119,7 @@ func run() error {
 	for _, v := range []BaklavaProvider{
 		karakoygulluoglu.KarakoyGulluogluProvider{},
 		farukgulluoglu.FarukGulluogluProvider{},
+		elmacipazarigulluoglu.ElmacipazariGulluogluProvider{},
 		kocakbaklava.KocakProvider{},
 		imamcagdas.ImamCagdasProvider{},
 		gaziantepgulluoglu.GaziantepGulluogluProvider{},
