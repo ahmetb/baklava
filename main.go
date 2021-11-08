@@ -21,6 +21,7 @@ import (
 	"baklava/providers/imamcagdas"
 	"baklava/providers/karakoygulluoglu"
 	"baklava/providers/kocakbaklava"
+	"baklava/providers/celebiogullari"
 	"baklava/util"
 )
 
@@ -121,6 +122,7 @@ func run() error {
 		farukgulluoglu.FarukGulluogluProvider{},
 		elmacipazarigulluoglu.ElmacipazariGulluogluProvider{},
 		kocakbaklava.KocakProvider{},
+		celebiogullari.CelebiogullariProvider{},
 		imamcagdas.ImamCagdasProvider{},
 		gaziantepgulluoglu.GaziantepGulluogluProvider{},
 	} {
