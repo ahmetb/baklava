@@ -22,6 +22,7 @@ import (
 	"baklava/providers/karakoygulluoglu"
 	"baklava/providers/kocakbaklava"
 	"baklava/providers/celebiogullari"
+	"baklava/providers/koskeroglu"
 	"baklava/util"
 )
 
@@ -125,6 +126,7 @@ func run() error {
 		celebiogullari.CelebiogullariProvider{},
 		imamcagdas.ImamCagdasProvider{},
 		gaziantepgulluoglu.GaziantepGulluogluProvider{},
+		koskeroglu.KoskerogluProvider{},
 	} {
 		cost, err := v.FistikliBaklava()
 		if err != nil {
