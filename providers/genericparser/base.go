@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 
 	"github.com/PuerkitoBio/goquery"
@@ -15,13 +16,19 @@ import (
 type GenericParser struct{}
 
 func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
+	cl := http.Client{
+		Transport: &http.Transport{
+			TLSHandshakeTimeout:   time.Second * 5,
+			ResponseHeaderTimeout: time.Second * 5,
+			Proxy:                 http.ProxyFromEnvironment,
+		}}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 	req.Header.Set("User-Agent", "curl/7.64.1") // with Go UA, or a real ChromeUA, karakoygulluoglu returns price in USD (wtf)
 	req.Header.Set("Accept-Language", "tr-TR, tr, en-US, en")
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := cl.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("request error: %w", err)
 	}

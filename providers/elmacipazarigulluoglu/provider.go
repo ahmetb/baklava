@@ -11,9 +11,9 @@ const (
 )
 
 const (
-	fistikliBaklavaURL = "https://www.elmacipazarigulluoglu.com/Urun.aspx?pID=7"
-	kuruBaklavaURL     = "https://www.elmacipazarigulluoglu.com/Urun.aspx?pID=3"
-	fistikDolamaURL    = "https://www.elmacipazarigulluoglu.com/Urun.aspx?pID=13"
+	fistikliBaklavaURL = "https://www.elmacipazarigulluoglu.com/fistikli-yas-baklava"
+	kuruBaklavaURL     = "https://www.elmacipazarigulluoglu.com/fistikli-kuru-baklava"
+	fistikDolamaURL    = "https://www.elmacipazarigulluoglu.com/fistikli-dolama-sarma"
 )
 
 type ElmacipazariGulluogluProvider struct{}
@@ -33,5 +33,5 @@ func (k ElmacipazariGulluogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k ElmacipazariGulluogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`table > tbody > tr:nth-child(4) > td:nth-child(3) > span > b`, u)
+	return genericparser.GenericParser{}.FromURL(`lblUrunFiyatiKDVDahil`, u)
 }
