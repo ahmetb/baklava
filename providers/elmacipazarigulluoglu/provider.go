@@ -7,10 +7,6 @@ import (
 )
 
 const (
-	farukGulluogluPriceList = "https://www.farukgulluoglu.com.tr/baklavalar?stock=1"
-)
-
-const (
 	fistikliBaklavaURL = "https://www.elmacipazarigulluoglu.com/fistikli-yas-baklava"
 	kuruBaklavaURL     = "https://www.elmacipazarigulluoglu.com/fistikli-kuru-baklava"
 	fistikDolamaURL    = "https://www.elmacipazarigulluoglu.com/fistikli-dolama-sarma"
@@ -33,5 +29,6 @@ func (k ElmacipazariGulluogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k ElmacipazariGulluogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`lblUrunFiyatiKDVDahil`, u)
+	return genericparser.GenericParser{}.FromURL(`#lblUrunFiyatiKDVDahil`, u)
+
 }

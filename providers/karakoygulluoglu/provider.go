@@ -29,5 +29,5 @@ func (k KarakoyGulluogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k KarakoyGulluogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#productPrice`, u)
+	return genericparser.GenericParser{}.FromURL(`.spanFiyat`, u)
 }
