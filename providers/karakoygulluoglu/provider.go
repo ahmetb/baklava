@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	fistikliBaklavaURL = "https://www.karakoygulluoglu.com/fistikli-baklava"
-	kuruBaklavaURL     = "https://www.karakoygulluoglu.com/fistikli-kuru-baklava"
-	fistikDolamaURL    = "https://www.karakoygulluoglu.com/fistikli-durum"
+	fistikliBaklavaURL = "https://www.karakoygulluoglu.com/fistikli-baklav?currency=try"
+	kuruBaklavaURL     = "https://www.karakoygulluoglu.com/fistikli-kuru-baklava?currency=try"
+	fistikDolamaURL    = "https://www.karakoygulluoglu.com/fistikli-durum?currency=try"
 )
 
 type KarakoyGulluogluProvider struct{}
