@@ -15,14 +15,15 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 
+	"baklava/providers/celebiogullari"
 	"baklava/providers/elmacipazarigulluoglu"
 	"baklava/providers/farukgulluoglu"
 	"baklava/providers/gaziantepgulluoglu"
 	"baklava/providers/imamcagdas"
 	"baklava/providers/karakoygulluoglu"
 	"baklava/providers/kocakbaklava"
-	"baklava/providers/celebiogullari"
 	"baklava/providers/koskeroglu"
+	"baklava/providers/secbaklava"
 	"baklava/util"
 )
 
@@ -127,6 +128,7 @@ func run() error {
 		imamcagdas.ImamCagdasProvider{},
 		gaziantepgulluoglu.GaziantepGulluogluProvider{},
 		koskeroglu.KoskerogluProvider{},
+		secbaklava.SecBaklavaProvider{},
 	} {
 		cost, err := v.FistikliBaklava()
 		if err != nil {
