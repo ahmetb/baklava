@@ -14,7 +14,7 @@ const (
 
 type SecBaklavaProvider struct{}
 
-func (s SecBaklavaProvider) Name() string { return "SecBaklavaProvider" }
+func (s SecBaklavaProvider) Name() string { return "Seç" }
 
 func (s SecBaklavaProvider) FistikliBaklava() (*money.Money, error) {
 	return s.parseProductPrice(fistikliBaklavaURL)
