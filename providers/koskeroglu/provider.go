@@ -14,7 +14,7 @@ const (
 
 type KoskerogluProvider struct{}
 
-func (k KoskerogluProvider) Name() string { return "KoskerogluProvider" }
+func (k KoskerogluProvider) Name() string { return "Koskeroglu" }
 
 func (k KoskerogluProvider) FistikliBaklava() (*money.Money, error) {
 	return k.parseProductPrice(fistikliBaklavaURL)
