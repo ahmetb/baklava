@@ -22,7 +22,7 @@ import (
 	"baklava/providers/imamcagdas"
 	"baklava/providers/karakoygulluoglu"
 
-	//"baklava/providers/kocakbaklava"
+	"baklava/providers/kocakbaklava"
 	"baklava/providers/koskeroglu"
 	"baklava/providers/secbaklava"
 	"baklava/util"
@@ -124,7 +124,7 @@ func run() error {
 		karakoygulluoglu.KarakoyGulluogluProvider{},
 		farukgulluoglu.FarukGulluogluProvider{},
 		elmacipazarigulluoglu.ElmacipazariGulluogluProvider{},
-		//kocakbaklava.KocakProvider{},
+		kocakbaklava.KocakProvider{},
 		celebiogullari.CelebiogullariProvider{},
 		imamcagdas.ImamCagdasProvider{},
 		gaziantepgulluoglu.GaziantepGulluogluProvider{},
