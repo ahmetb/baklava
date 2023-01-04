@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	fistikliBaklavaURL = "https://www.koskeroglu.com/urun/fistikli-baklava/"
-	kuruBaklavaURL     = "https://www.koskeroglu.com/urun/fistikli-kuru-baklava/"
-	fistikDolamaURL    = "https://www.koskeroglu.com/urun/fistikli-sarma/"
+	fistikliBaklavaURL = "https://koskeroglu.com/baklavalar/fistikli-baklava.html"
+	kuruBaklavaURL     = "https://koskeroglu.com/baklavalar/fistikli-kuru-baklava.html"
+	fistikDolamaURL    = "https://koskeroglu.com/baklavalar/fistikli-sarma-baklava.html"
 )
 
 type KoskerogluProvider struct{}
@@ -29,6 +29,6 @@ func (k KoskerogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k KoskerogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`p.price`, u)
+	return genericparser.GenericParser{}.FromURL(`div.product-price`, u)
 
 }
