@@ -11,8 +11,8 @@ const (
     // outside Turkey. If you update them, make sure the DOM element still
     // contains TRY currency.
 	fistikliBaklavaURL = "https://www.celebiogullari.com.tr/celebiogullari-baklava-1-kg-paket"
-	kuruBaklavaURL     = `https://www.celebiogullari.com.tr/1-kg-paket`
-	fistikDolamaURL    = `https://www.celebiogullari.com.tr/celebiogullari-fistik-sarma-dolama-1-kg-paket`
+	kuruBaklavaURL     = "https://www.celebiogullari.com.tr/1-kg-paket"
+	fistikDolamaURL    = "https://www.celebiogullari.com.tr/celebiogullari-fistik-sarma-dolama-1-kg-paket"
 )
 
 type CelebiogullariProvider struct{}
@@ -22,13 +22,13 @@ func (k CelebiogullariProvider) Name() string {
 }
 
 func (k CelebiogullariProvider) FistikliBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis`, fistikliBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, fistikliBaklavaURL)
 }
 
 func (k CelebiogullariProvider) KuruBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis`, kuruBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, kuruBaklavaURL)
 }
 
 func (k CelebiogullariProvider) FistikDolama() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis`, fistikDolamaURL)
+	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, fistikDolamaURL)
 }
