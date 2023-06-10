@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	fistikliBaklavaURL = "https://www.kocakbaklava.com.tr/baklava-1-kg-paket"
-	kuruBaklavaURL     = `https://www.kocakbaklava.com.tr/kuru-baklava-1-kg-paket`
-	fistikDolamaURL    = `https://www.kocakbaklava.com.tr/dolama-1-kg-paket`
+	fistikliBaklavaURL = "https://www.kocakbaklava.com.tr/tr/baklava-1-kg-paket"
+	kuruBaklavaURL     = "https://www.kocakbaklava.com.tr/tr/kuru-baklava-1-kg-paket"
+	fistikDolamaURL    = "https://www.kocakbaklava.com.tr/tr/dolama-1-kg-paket"
 )
 
 type KocakProvider struct{}
