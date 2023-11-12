@@ -13,7 +13,7 @@ const (
 const (
 	fistikliBaklavaURL = "https://www.farukgulluoglu.com.tr/fistikli-baklava-1-kg?c=1"
 	kuruBaklavaURL     = "https://www.farukgulluoglu.com.tr/fistikli-kuru-baklava-1-kg"
-	fistikDolamaURL    = "https://www.farukgulluoglu.com.tr/fistikli-durum-1-kg"
+	fistikDolamaURL    = "https://www.farukgulluoglu.com.tr" //TODO: "I have temporarily deactivated this link until the to-do is completed. todo:genericparser/base.go Link:https://www.farukgulluoglu.com.tr/fistikli-durum-1-kg"
 )
 
 type FarukGulluogluProvider struct{}
@@ -33,9 +33,9 @@ func (k FarukGulluogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k FarukGulluogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	indirimli, err := genericparser.GenericParser{}.FromURL(`#indirimli-fiyat`, u)
+	indirimli, err := genericparser.GenericParser{}.FromURL(`#indirimli`, u)
 	if err == nil {
 		return indirimli, nil
 	}
-	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, u)
+	return genericparser.GenericParser{}.FromURL(`#satis`, u)
 }
