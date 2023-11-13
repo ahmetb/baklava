@@ -22,13 +22,13 @@ func (k CelebiogullariProvider) Name() string {
 }
 
 func (k CelebiogullariProvider) FistikliBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, fistikliBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`#salePrice`, fistikliBaklavaURL)
 }
 
 func (k CelebiogullariProvider) KuruBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, kuruBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`#salePrice`, kuruBaklavaURL)
 }
 
 func (k CelebiogullariProvider) FistikDolama() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`#satis-fiyati`, fistikDolamaURL)
+	return genericparser.GenericParser{}.FromURL(`#salePrice`, fistikDolamaURL)
 }

@@ -19,13 +19,13 @@ func (k KocakProvider) Name() string {
 }
 
 func (k KocakProvider) FistikliBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, fistikliBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`span#satis`, fistikliBaklavaURL)
 }
 
 func (k KocakProvider) KuruBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, kuruBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`span#satis`, kuruBaklavaURL)
 }
 
 func (k KocakProvider) FistikDolama() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, fistikDolamaURL)
+	return genericparser.GenericParser{}.FromURL(`span#satis`, fistikDolamaURL)
 }

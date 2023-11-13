@@ -55,7 +55,8 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		currency = "USD"
 		t = strings.TrimSuffix(t, "USD")
 	}
-
+	
+	//TODO: This regex is start causing problem because some product prices reached four-digit numbers
 	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.]?(\d+)?\s*$`)
 	if !re.MatchString(t) {
 		return nil, fmt.Errorf("string doesn't match format for parsing: %q (%s)", t, re)
