@@ -44,35 +44,31 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	if t == "" {
 		return nil, fmt.Errorf("selector didn't match anything")
 	}
-	t = strings.TrimFunc(t, unicode.IsSpace)
-	t = strings.ReplaceAll(t, "\n", "")
 
 	currency := "TRY" // assume default
-	if strings.HasSuffix(t, "TL") {
+	if regexp.MustCompile(`\b(tl|try|₺)\b`).MatchString(strings.ToLower(t)) {
 		currency = "TRY"
-		t = strings.TrimSuffix(t, "TL")
-	} else if strings.HasSuffix(t, "USD") {
+	} else if regexp.MustCompile(`\b(usd|\$)\b`).MatchString(strings.ToLower(t)) {
 		currency = "USD"
-		t = strings.TrimSuffix(t, "USD")
 	}
-	
-	//TODO: This regex is start causing problem because some product prices reached four-digit numbers
-	re := regexp.MustCompile(`[.*:\s*]?(\d+)[,\.]?(\d+)?\s*$`)
-	if !re.MatchString(t) {
-		return nil, fmt.Errorf("string doesn't match format for parsing: %q (%s)", t, re)
+
+	// If no dot or comma, add two zeros at the end
+	if !strings.ContainsAny(t, ".,") {
+		t += "00"
 	}
-	groups := re.FindStringSubmatch(t)
-	dec, frac := groups[1], groups[2]
-	if frac == "" {
-		frac = "0"
-	}
-	iDec, err := strconv.ParseInt(dec, 10, 64)
+
+	// Remove all non-digits
+	t = strings.Map(func(r rune) rune {
+		if !unicode.IsDigit(r) {
+			return -1
+		}
+		return r
+	}, t)
+
+	price, err := strconv.ParseInt(t, 10, 64)
 	if err != nil {
-		return nil, fmt.Errorf("error parsing decimal value (from %v): %v", dec, err)
+		return nil, fmt.Errorf("error transforming string to integer (from %v): %v", t, err)
 	}
-	iFrac, err := strconv.ParseInt(frac, 10, 64)
-	if err != nil {
-		return nil, fmt.Errorf("error parsing fractional value (from %v): %v", frac, err)
-	}
-	return money.New(iDec*100+iFrac, currency), nil
+
+	return money.New(price, currency), nil
 }
