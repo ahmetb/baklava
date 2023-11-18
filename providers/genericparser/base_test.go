@@ -17,24 +17,24 @@ func TestGenericParser(t *testing.T) {
 	// Create a new mock server
 	server := httptest.NewServer(handler)
 	defer server.Close()
-	price_one, err := genericparser.GenericParser{}.FromURL(`#price_one`, server.URL)
+	priceOne, err := genericparser.GenericParser{}.FromURL(`#price_one`, server.URL)
 	assert.Nil(t, err)
-	assert.Equal(t, price_one.Display(), "₺1,045.00", "The two price should be the same.")
+	assert.Equal(t, priceOne.Display(), "₺1,045.00")
 
-	price_two, err := genericparser.GenericParser{}.FromURL(`#price_two`, server.URL)
+	priceTwo, err := genericparser.GenericParser{}.FromURL(`#price_two`, server.URL)
 	assert.Nil(t, err)
-	assert.Equal(t, price_two.Display(), "₺650.00", "The two price should be the same.")
+	assert.Equal(t, priceTwo.Display(), "₺650.00")
 
-	price_three, err := genericparser.GenericParser{}.FromURL(`#price_three`, server.URL)
+	priceThree, err := genericparser.GenericParser{}.FromURL(`#price_three`, server.URL)
 	assert.Nil(t, err)
-	assert.Equal(t, price_three.Display(), "₺880.00", "The two price should be the same.")
+	assert.Equal(t, priceThree.Display(), "₺880.00")
 
-	price_four, err := genericparser.GenericParser{}.FromURL(`#price_four`, server.URL)
+	priceFour, err := genericparser.GenericParser{}.FromURL(`#price_four`, server.URL)
 	assert.Nil(t, err)
-	assert.Equal(t, price_four.Display(), "₺77.00", "The two price should be the same.")
+	assert.Equal(t, priceFour.Display(), "₺77.00")
 
-	price_five, err := genericparser.GenericParser{}.FromURL(`#price_five`, server.URL)
+	priceFive, err := genericparser.GenericParser{}.FromURL(`#price_five`, server.URL)
 	assert.Nil(t, err)
-	assert.Equal(t, price_five.Display(), "₺480.00", "The two price should be the same.")
+	assert.Equal(t, priceFive.Display(), "₺480.00")
 
 }
