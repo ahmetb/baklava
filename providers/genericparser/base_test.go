@@ -37,4 +37,7 @@ func TestGenericParser(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, priceFive.Display(), "₺480.00")
 
+	price_six, err := genericparser.GenericParser{}.FromURL(`#price_six`, server.URL)
+	assert.Nil(t, err)
+	assert.Equal(t, price_six.Display(), "₺1,070.00", "The two price should be the same.")
 }

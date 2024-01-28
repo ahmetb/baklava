@@ -65,6 +65,11 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		return r
 	}, t)
 
+	//if two zero not in end of string, add two zero at the end (problem with 1.070 TL price)
+	if !strings.HasSuffix(t, "00") {
+		t += "00"
+	}
+
 	price, err := strconv.ParseInt(t, 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("error transforming string to integer (from %v): %v", t, err)
