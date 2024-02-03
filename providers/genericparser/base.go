@@ -57,6 +57,9 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		t += "00"
 	}
 
+	// Remove fractional part
+	t,_,_ = strings.Cut(t, ",")
+
 	// Remove all non-digits
 	t = strings.Map(func(r rune) rune {
 		if !unicode.IsDigit(r) {
