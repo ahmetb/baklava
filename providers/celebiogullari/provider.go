@@ -7,9 +7,9 @@ import (
 )
 
 const (
-    // NB(ahmetb): these URLs do not work in the browser (gives 404)
-    // outside Turkey. If you update them, make sure the DOM element still
-    // contains TRY currency.
+	// NB(ahmetb): these URLs do not work in the browser (gives 404)
+	// outside Turkey. If you update them, make sure the DOM element still
+	// contains TRY currency.
 	fistikliBaklavaURL = "https://www.celebiogullari.com.tr/celebiogullari-baklava-1-kg-paket"
 	kuruBaklavaURL     = "https://www.celebiogullari.com.tr/1-kg-paket"
 	fistikDolamaURL    = "https://www.celebiogullari.com.tr/celebiogullari-fistik-sarma-dolama-1-kg-paket"
