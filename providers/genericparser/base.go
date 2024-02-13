@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"unicode"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/Rhymond/go-money"
@@ -52,26 +51,35 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 		currency = "USD"
 	}
 
-	// If no dot or comma, add two zeros at the end
-	if !strings.ContainsAny(t, ".,") {
-		t += "00"
+	// Remove all characters except digits, period, and comma
+	re := regexp.MustCompile(`[^0-9.,]`)
+	t = re.ReplaceAllString(t, "")
+
+	// If the length is less than 3, return error
+	if len(t) < 3 {
+		return nil, fmt.Errorf("price too low: %s", t)
 	}
 
-	// Remove fractional part
-	t,_,_ = strings.Cut(t, ",")
+	thousand := false
+
+	// Check price indicates thousands
+	if len(t) >= 4 && (t[1] == '.' || t[1] == ',' || t[4] == ',') {
+		thousand = true
+	}
 
 	// Remove all non-digits
-	t = strings.Map(func(r rune) rune {
-		if !unicode.IsDigit(r) {
-			return -1
-		}
-		return r
-	}, t)
+	re = regexp.MustCompile(`[^0-9]`)
+	t = re.ReplaceAllString(t, "")
 
-	//if two zero not in end of string, add two zero at the end (problem with 1.070 TL price)
-	if !strings.HasSuffix(t, "00") {
-		t += "00"
+	// Trim the string
+	if thousand {
+		t = t[:4]
+	} else {
+		t = t[:3]
 	}
+
+	// Append two zeros to represent the cents part
+	t += "00"
 
 	price, err := strconv.ParseInt(t, 10, 64)
 	if err != nil {
