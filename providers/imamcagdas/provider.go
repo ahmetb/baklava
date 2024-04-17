@@ -19,13 +19,13 @@ func (i ImamCagdasProvider) Name() string {
 }
 
 func (i ImamCagdasProvider) FistikliBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`.product-current-price`, fistikliBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`.product-price`, fistikliBaklavaURL)
 }
 
 func (i ImamCagdasProvider) FistikDolama() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`.product-current-price`, fistikDolamaURL)
+	return genericparser.GenericParser{}.FromURL(`.product-price`, fistikDolamaURL)
 }
 
 func (i ImamCagdasProvider) KuruBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`.product-current-price`, kuruBaklavaURL)
+	return genericparser.GenericParser{}.FromURL(`.product-price`, kuruBaklavaURL)
 }
