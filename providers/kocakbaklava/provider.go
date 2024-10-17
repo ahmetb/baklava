@@ -14,18 +14,25 @@ const (
 
 type KocakProvider struct{}
 
-func (k KocakProvider) Name() string {
-	return "Kocak"
+func (s KocakProvider) Name() string { return "Kocak" }
+
+func (s KocakProvider) FistikliBaklava() (*money.Money, error) {
+	return s.parseProductPrice(fistikliBaklavaURL)
 }
 
-func (k KocakProvider) FistikliBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`span#satis`, fistikliBaklavaURL)
+func (s KocakProvider) KuruBaklava() (*money.Money, error) {
+	return s.parseProductPrice(kuruBaklavaURL)
 }
 
-func (k KocakProvider) KuruBaklava() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`span#satis`, kuruBaklavaURL)
+func (s KocakProvider) FistikDolama() (*money.Money, error) {
+	return s.parseProductPrice(fistikDolamaURL)
 }
 
-func (k KocakProvider) FistikDolama() (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`span#satis`, fistikDolamaURL)
+func (s KocakProvider) parseProductPrice(u string) (*money.Money, error) {
+	indirimli, err := genericparser.GenericParser{}.FromURL(`#indirimli-fiyat`, u)
+	if err == nil {
+		return indirimli, nil
+	}
+
+	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, u)
 }
