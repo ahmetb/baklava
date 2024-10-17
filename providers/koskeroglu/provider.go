@@ -30,11 +30,5 @@ func (k KoskerogluProvider) FistikDolama() (*money.Money, error) {
 
 func (k KoskerogluProvider) parseProductPrice(u string) (*money.Money, error) {
 	price, err := genericparser.GenericParser{}.FromURL(`span.spanFiyat`, u)
-	if err != nil {
-		return nil, err
-	}
-
-	//We can't get 1kg price from website, so we multiply 500gr price with 2
-	price = price.Multiply(2)
 	return price, err
 }

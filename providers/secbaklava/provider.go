@@ -29,6 +29,6 @@ func (s SecBaklavaProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (s SecBaklavaProvider) parseProductPrice(u string) (*money.Money, error) {
-	return genericparser.GenericParser{}.FromURL(`p.price`, u)
+	return genericparser.GenericParser{}.FromURL(`span.woocommerce-Price-amount`, u)
 
 }
