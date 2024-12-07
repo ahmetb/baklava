@@ -34,5 +34,5 @@ func (s KocakProvider) parseProductPrice(u string) (*money.Money, error) {
 		return indirimli, nil
 	}
 
-	return genericparser.GenericParser{}.FromURL(`div#satis-fiyati`, u)
+	return genericparser.GenericParser{}.FromURL(`div#salePrice`, u)
 }
