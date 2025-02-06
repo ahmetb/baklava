@@ -39,7 +39,24 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse doc: %w", err)
 	}
-	t := d.Find(selector).Text()
+
+	t := ""
+	if selector[0] != '"' {
+		t = d.Find(selector).Text()
+	} else {
+		re := regexp.MustCompile(selector)
+		html, err := d.Html()
+		if err != nil {
+			return nil, fmt.Errorf("failed to get HTML: %w", err)
+		}
+		matches := re.FindStringSubmatch(html)
+		if len(matches) > 0 {
+			t = matches[0]
+		} else {
+			return nil, fmt.Errorf("selector didn't match anything")
+		}
+	}
+
 	if t == "" {
 		return nil, fmt.Errorf("selector didn't match anything")
 	}
@@ -55,36 +72,24 @@ func (_ GenericParser) FromURL(selector, url string) (*money.Money, error) {
 	re := regexp.MustCompile(`[^0-9.,]`)
 	t = re.ReplaceAllString(t, "")
 
-	// If the length is less than 3, return error
-	if len(t) < 3 {
-		return nil, fmt.Errorf("price too low: %s", t)
+	if strings.Contains(t, ",") {
+		if len(strings.Split(t, ",")[1]) == 3 {
+			t = strings.ReplaceAll(t, ",", "") + ".00"
+		} else {
+			t = strings.ReplaceAll(strings.ReplaceAll(t, ".", ""), ",", ".")
+		}
+	} else if strings.Contains(t, ".") && len(t)-strings.LastIndex(t, ".")-1 == 3 {
+		t = strings.ReplaceAll(t, ".", "")
 	}
 
-	thousand := false
-
-	// Check price indicates thousands
-	if len(t) >= 4 && (t[1] == '.' || t[1] == ',' || t[4] == ',') {
-		thousand = true
+	if !strings.Contains(t, ".") {
+		t += ".00"
 	}
 
-	// Remove all non-digits
-	re = regexp.MustCompile(`[^0-9]`)
-	t = re.ReplaceAllString(t, "")
-
-	// Trim the string
-	if thousand {
-		t = t[:4]
-	} else {
-		t = t[:3]
-	}
-
-	// Append two zeros to represent the cents part
-	t += "00"
-
-	price, err := strconv.ParseInt(t, 10, 64)
+	price, err := strconv.ParseFloat(t, 64)
 	if err != nil {
-		return nil, fmt.Errorf("error transforming string to integer (from %v): %v", t, err)
+		return nil, fmt.Errorf("failed to parse float: %w", err)
 	}
 
-	return money.New(price, currency), nil
+	return money.New(int64(price*100), currency), nil
 }
