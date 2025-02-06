@@ -29,6 +29,6 @@ func (k KoskerogluProvider) FistikDolama() (*money.Money, error) {
 }
 
 func (k KoskerogluProvider) parseProductPrice(u string) (*money.Money, error) {
-	price, err := genericparser.GenericParser{}.FromURL(`span.spanFiyat`, u)
+	price, err := genericparser.GenericParser{}.FromURL(`"price":"(\d+([.,]\d+)?)"`, u)
 	return price, err
 }
